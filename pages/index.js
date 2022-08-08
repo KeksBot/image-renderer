@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 
 export function getStaticProps() {
     // global.fonts.OXANIUM_8_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_8_white.fnt`)
@@ -9,6 +10,7 @@ export function getStaticProps() {
 
     path.resolve(process.cwd(), 'fonts');
     path.resolve(process.cwd(), 'images/battle');
+    console.log(fs.readdirSync(path.resolve(process.cwd(), 'fonts')));
     console.log('test')
     return {
         props: {
