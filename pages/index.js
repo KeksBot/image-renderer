@@ -10,7 +10,7 @@ export function getStaticProps() {
 
     path.resolve(process.cwd(), 'fonts');
     path.resolve(process.cwd(), 'images/battle');
-    console.log(fs.readdirSync(path.resolve(process.cwd(), 'fonts')));
+    let contents = fs.readdirSync(path.resolve(process.cwd(), 'fonts'))
     console.log('test')
     return {
         props: {
@@ -19,8 +19,11 @@ export function getStaticProps() {
     }
 }
 
-export default function Home() {
+export default function Home({ a }) {
     return (
-        <h1>hewwo</h1>
+        <div>
+            <h1>hewwo</h1>
+            {a.join(', ')}
+        </div>
     )
 }
