@@ -169,8 +169,10 @@ function createTeamHPBars(users) {
                 text: `${user.h} / ${user.m}`,
             }
         )
+        let font = Jimp.measureText(global.fonts.OXANIUM_20_WHITE, `${user.n}`) < 170 ? global.fonts.OXANIUM_20_WHITE : global.fonts.OXANIUM_14_WHITE
         baseBar.print(
-            global.fonts.OXANIUM_20_WHITE, 3, 16,
+            font, 3, 
+            font == global.fonts.OXANIUM_20_WHITE ? 16 : 18,
             {
                 text: `${user.n}`,
             }
