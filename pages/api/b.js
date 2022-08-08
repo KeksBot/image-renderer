@@ -213,5 +213,5 @@ export default async function handler(req, res) {
     const users = JSON.parse(query.users)
     let image = createTeamHPBars(users)[0]
     res.setHeader('Content-Type', 'image/png')
-    res.send(await image.getBufferAsync(Jimp.MIME_PNG))
+    res.send(await image.getBufferAsync(Jimp.MIME_PNG)) 
 }
