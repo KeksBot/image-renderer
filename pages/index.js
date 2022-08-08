@@ -5,7 +5,7 @@ export function getStaticProps() {
     path.resolve(process.cwd(), 'images', 'battle');
 }
 
-export default function() {
+export default function Home() {
     return (
         <h1>hewwo</h1>
     )
