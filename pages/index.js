@@ -14,7 +14,7 @@ export function getStaticProps() {
     console.log('test')
     return {
         props: {
-            a: 0
+            a: contents
         }
     }
 }
