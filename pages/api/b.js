@@ -7,7 +7,8 @@ const fontFolder = path.join(process.cwd(), './images/fonts/')
 const templates = {
     self: {},
     team: {},
-    enemy: {}
+    enemy: {},
+    other: {}
 }
 
 function generateHPBar(user, x, y, barType) {
@@ -153,6 +154,22 @@ function createEnemyHPBars(users) {
     return displays
 }
 
+function finalRender(users) {
+    let image = templates.other.background.clone()
+    let playerHPBar = createPlayerHPBar(users)
+    let teamHPBars = createTeamHPBars(users)
+    let enemyHPBars = createEnemyHPBars(users)
+
+    image.composite(playerHPBar, 158, 310)
+    teamHPBars.forEach((bar, index) => {
+        image = image.composite(bar, 2, 2 + index * 52)
+    })
+    enemyHPBars.forEach((bar, index) => {
+        image.composite(bar, 447, 2 + index * 50)
+    })
+
+    return image
+}
 
 export default async function handler(req, res) {
     if (!Object.values(templates.self).length) {
@@ -176,6 +193,8 @@ export default async function handler(req, res) {
         templates.enemy.barRed = await Jimp.read(battleFolder + 'hpbar_enemy_hpbar_red.png');
         templates.enemy.barYellow = await Jimp.read(battleFolder + 'hpbar_enemy_hpbar_yellow.png');
         templates.enemy.barEmpty = await Jimp.read(battleFolder + 'hpbar_enemy_hpbar_empty.png');
+
+        templates.other.background = await Jimp.read(battleFolder + 'background.png');
     }
 
     if(!global.fonts) {
@@ -189,7 +208,7 @@ export default async function handler(req, res) {
 
     const { query } = req;
     const users = JSON.parse(query.users)
-    let image = createEnemyHPBars(users)[0]
+    let image = finalRender(users)
     res.setHeader('Content-Type', 'image/png')
     res.send(await image.getBufferAsync(Jimp.MIME_PNG)) 
 }
