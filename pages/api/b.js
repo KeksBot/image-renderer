@@ -165,7 +165,7 @@ function finalRender(users) {
         image = image.composite(bar, 2, 2 + index * 52)
     })
     enemyHPBars.forEach((bar, index) => {
-        image.composite(bar, 447, 2 + index * 50)
+        image.composite(bar, 447, 2 + index * 52)
     })
 
     return image
