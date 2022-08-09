@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import Jimp from 'jimp';
 const battleFolder = `${process.cwd()}/images/battle/`
-const fontFolder = `${process.cwd()}/fonts/`
+const fontFolder = `${process.cwd()}/weirdTests/`
 
 const templates = {
     self: {},

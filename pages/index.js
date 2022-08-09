@@ -10,7 +10,7 @@ export function getServerSideProps() {
 
     // path.resolve(process.cwd(), 'fonts');
     // path.resolve(process.cwd(), 'images/battle');
-    let contents = fs.readdirSync(path.resolve(process.cwd(), 'fonts'))
+    let contents = fs.readdirSync(path.resolve(process.cwd(), 'weirdTests'))
     return {
         props: {
             a: contents
