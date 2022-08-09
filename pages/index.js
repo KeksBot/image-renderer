@@ -1,5 +1,4 @@
 import path from 'path';
-import fs from 'fs';
 
 export function getServerSideProps() {
     // global.fonts.OXANIUM_8_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_8_white.fnt`)
