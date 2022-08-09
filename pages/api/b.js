@@ -33,7 +33,11 @@ function createPlayerHPBar(users) {
             templates.self.barBackground
                 .clone()
                 .composite(hpBar, 2, 2),
-            80, 20
+            80, 20,
+            {
+                opacitySource: 1,
+                opacityDest: 0.66
+            }
         )
     baseBar.print(
         global.fonts.OXANIUM_14_WHITE, 80, 33,
@@ -72,7 +76,11 @@ function createTeamHPBars(users) {
                 templates.team.barBackground
                     .clone()
                     .composite(hpBar, 2, 2),
-                3, 3
+                3, 3,
+                {
+                    opacitySource: 1,
+                    opacityDest: 0.66
+                }
             )
         baseBar.print(
             global.fonts.OXANIUM_8_WHITE, 4, 39,
@@ -124,7 +132,11 @@ function createEnemyHPBars(users) {
                 templates.enemy.barBackground
                     .clone()
                     .composite(hpBar, 3, 2),
-                6, 3
+                6, 3,
+                {
+                    opacitySource: 1,
+                    opacityDest: 0.66
+                }
             )
         
         let levelLength = Jimp.measureText(global.fonts.OXANIUM_12_WHITE, `${user.l}`)
