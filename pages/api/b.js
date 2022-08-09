@@ -10,87 +10,15 @@ const templates = {
     enemy: {}
 }
 
-let input = {
-    users: [
-        {
-            n: '12345678901234567890123456789012',
-            h: 420,
-            m: 1234,
-            l: 123,
-            t: 1
-        },
-        {
-            n: '12345678901234567890123456789012',
-            h: 12345678,
-            m: 12345678,
-            l: 123,
-            t: 1
-        },
-        {
-            n: '12345678901234567890123456789012',
-            h: 12345678,
-            m: 12345678,
-            l: 123,
-            t: 1
-        },
-        {
-            n: '12345678901234567890123456789012',
-            h: 12345678,
-            m: 12345678,
-            l: 123,
-            t: 1
-        },
-        {
-            n: '12345678901234567890123456789012',
-            h: 12345678,
-            m: 12345678,
-            l: 123,
-            t: 1
-        },
-        {
-            n: '12345678901234567890123456789012',
-            h: 12345678,
-            m: 12345678,
-            l: 123,
-            t: 1
-        },
-        {
-            n: '12345678901234567890123456789012',
-            h: 12345678,
-            m: 12345678,
-            l: 123,
-            t: 1
-        },
-        {
-            n: '12345678901234567890123456789012',
-            h: 12345678,
-            m: 12345678,
-            l: 123,
-            t: 1
-        },
-        {
-            n: '12345678901234567890123456789012',
-            h: 12345678,
-            m: 12345678,
-            l: 123,
-            t: 1
-        }, {
-            n: '12345678901234567890123456789012',
-            h: 12345678,
-            m: 12345678,
-            l: 123,
-            t: 1
-        }
-    ]
-}
-
 function generateHPBar(user, x, y, barType) {
     let relativeHP = user.h / user.m
     let color =
         relativeHP > 0.5 ? 'Green' :
         relativeHP > 0.25 ? 'Yellow' :
         'Red'
-    let hpBar = templates[barType].barEmpty.clone().composite(templates[barType][`bar${color}`].clone().crop(0, 0, Math.round(x * relativeHP), y), 0, 0)
+    let hpBar = barType != 'enemy' 
+        ? templates[barType].barEmpty.clone().composite(templates[barType][`bar${color}`].clone().crop(0, 0, Math.round(x * relativeHP), y), 0, 0)
+        : templates.enemy.barEmpty.clone().composite(templates.enemy[`bar${color}`].clone().crop(x - Math.round(x * relativeHP), 0, Math.round(x * relativeHP), y), x - Math.round(x * relativeHP), 0)
     hpBar.setPixelColor(hpBar.getPixelColor(0, 1), 0, 0)
     return hpBar
 }
@@ -183,6 +111,48 @@ function createTeamHPBars(users) {
     return displays
 }
 
+function createEnemyHPBars(users) {
+    let team = users.shift().t
+    users = users.filter(u => u.t != team)
+    let displays = []
+    users.forEach(user => {
+        let hpBar = generateHPBar(user, 177, 7, 'enemy')
+        let baseBar = templates.enemy.background
+            .clone()
+            .composite(
+                templates.enemy.barBackground
+                    .clone()
+                    .composite(hpBar, 3, 2),
+                6, 3
+            )
+        
+        let levelLength = Jimp.measureText(global.fonts.OXANIUM_12_WHITE, `${user.l}`)
+        baseBar.print(
+            global.fonts.OXANIUM_8_WHITE, 176 - levelLength, 39,
+            {
+                text: 'Lv.'
+            }
+        )
+        baseBar.print(
+            global.fonts.OXANIUM_12_WHITE, 188 - levelLength, 36,
+            {
+                text: `${user.l}`
+            }
+        )
+        let nameLength = Jimp.measureText(global.fonts.OXANIUM_20_WHITE, `${user.n}`)
+        let font = nameLength < 170 ? global.fonts.OXANIUM_20_WHITE : global.fonts.OXANIUM_14_WHITE
+        baseBar.print(
+            font, 189 - nameLength, 
+            font == global.fonts.OXANIUM_20_WHITE ? 16 : 18,
+            {
+                text: `${user.n}`,
+            }
+        )
+        displays.push(baseBar)
+    })
+    return displays
+}
+
 
 export default async function handler(req, res) {
     if (!Object.values(templates.self).length) {
@@ -199,6 +169,13 @@ export default async function handler(req, res) {
         templates.team.barRed = await Jimp.read(battleFolder + 'hpbar_team_hpbar_red.png');
         templates.team.barYellow = await Jimp.read(battleFolder + 'hpbar_team_hpbar_yellow.png');
         templates.team.barEmpty = await Jimp.read(battleFolder + 'hpbar_team_hpbar_empty.png');
+
+        templates.enemy.background = await Jimp.read(battleFolder + 'hpbar_enemy_background.png');
+        templates.enemy.barBackground = await Jimp.read(battleFolder + 'hpbar_enemy_hpbar_background.png');
+        templates.enemy.barGreen = await Jimp.read(battleFolder + 'hpbar_enemy_hpbar_green.png');
+        templates.enemy.barRed = await Jimp.read(battleFolder + 'hpbar_enemy_hpbar_red.png');
+        templates.enemy.barYellow = await Jimp.read(battleFolder + 'hpbar_enemy_hpbar_yellow.png');
+        templates.enemy.barEmpty = await Jimp.read(battleFolder + 'hpbar_enemy_hpbar_empty.png');
     }
 
     if(!global.fonts) {
@@ -212,7 +189,7 @@ export default async function handler(req, res) {
 
     const { query } = req;
     const users = JSON.parse(query.users)
-    let image = createTeamHPBars(users)[0]
+    let image = createEnemyHPBars(users)[0]
     res.setHeader('Content-Type', 'image/png')
     res.send(await image.getBufferAsync(Jimp.MIME_PNG)) 
 }
