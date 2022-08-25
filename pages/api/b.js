@@ -36,7 +36,7 @@ function createPlayerHPBar(users) {
             80, 20,
             {
                 opacitySource: 1,
-                opacityDest: 0.66
+                opacityDest: 0.8
             }
         )
     baseBar.print(
@@ -79,7 +79,7 @@ function createTeamHPBars(users) {
                 3, 3,
                 {
                     opacitySource: 1,
-                    opacityDest: 0.66
+                    opacityDest: 0.8
                 }
             )
         baseBar.print(
@@ -135,7 +135,7 @@ function createEnemyHPBars(users) {
                 6, 3,
                 {
                     opacitySource: 1,
-                    opacityDest: 0.66
+                    opacityDest: 0.8
                 }
             )
         
