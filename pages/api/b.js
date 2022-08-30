@@ -168,9 +168,9 @@ function createEnemyHPBars(users) {
 
 function finalRender(users) {
     let image = templates.other.background.clone()
-    let playerHPBar = createPlayerHPBar(users)
-    let teamHPBars = createTeamHPBars(users)
-    let enemyHPBars = createEnemyHPBars(users)
+    let playerHPBar = createPlayerHPBar([...users])
+    let teamHPBars = createTeamHPBars([...users])
+    let enemyHPBars = createEnemyHPBars([...users])
 
     image.composite(playerHPBar, 158, 310)
     teamHPBars.forEach((bar, index) => {
