@@ -209,14 +209,12 @@ export default async function handler(req, res) {
         templates.other.background = await Jimp.read(battleFolder + 'background.png');
     }
 
-    if(!global.fonts) {
-        global.fonts = {}
-        global.fonts.OXANIUM_8_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_8_white.fnt`)
-        global.fonts.OXANIUM_12_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_12_white.fnt`)
-        global.fonts.OXANIUM_14_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_14_white.fnt`)
-        global.fonts.OXANIUM_20_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_20_white.fnt`)
-        global.fonts.OXANIUM_24_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_24_white.fnt`)
-    }
+    if(!global.fonts) global.fonts = {}
+    if(!global.fonts.OXANIUM_8_WHITE) global.fonts.OXANIUM_8_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_8_white.fnt`)
+    if(!global.fonts.OXANIUM_12_WHITE) global.fonts.OXANIUM_12_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_12_white.fnt`)
+    if(!global.fonts.OXANIUM_14_WHITE) global.fonts.OXANIUM_14_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_14_white.fnt`)
+    if(!global.fonts.OXANIUM_20_WHITE) global.fonts.OXANIUM_20_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_20_white.fnt`)
+    if(!global.fonts.OXANIUM_24_WHITE) global.fonts.OXANIUM_24_WHITE = await Jimp.loadFont(`${fontFolder}OxaniumLight_24_white.fnt`)
 
     const { query } = req;
     const users = JSON.parse(query.users)
