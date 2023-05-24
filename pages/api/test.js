@@ -1,10 +1,12 @@
 import { createCanvas, loadImage } from "canvas";
 var background, circlePending, circleReady
 
+const imageFolder = process.cwd() + '/images/battle-v2'
+
 export default async function handler(req, res) {
-    if(!background) background = await loadImage(process.cwd() + '/images/battle-v2/ready_background.png')
-    if(!circlePending) circlePending = await loadImage(process.cwd() + '/images/battle-v2/ready_circle_pending.png')
-    if(!circleReady) circleReady = await loadImage(process.cwd() + '/images/battle-v2/ready_circle_ok.png')
+    if(!background) background = await loadImage(imageFolder + '/ready_background.png')
+    if(!circlePending) circlePending = await loadImage(imageFolder + '/ready_circle_pending.png')
+    if(!circleReady) circleReady = await loadImage(imageFolder + '/ready_circle_ok.png')
 
     const canvas = createCanvas(1280, 720)
     const ctx = canvas.getContext('2d') 
