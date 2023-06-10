@@ -61,7 +61,7 @@ export default async function handler(req, res) {
     ctx.rect(484, 663, 312 * (user.h / user.m), 14)
     ctx.save()
     ctx.clip()
-    ctx.drawImage(hpBars.player[user.h / user.m > .5 ? 'green' : user.h / user.m > .25 ? 'yellow' : 'red'], 484, 663)
+    ctx.drawImage(hpBars.player[user.h / user.m > .5 ? 'green' : user.h / user.m > .25 ? 'yellow' : 'red'], 172 + 312 * user.h / user.m, 663)
     ctx.closePath()
     ctx.restore()
 
@@ -101,9 +101,9 @@ export default async function handler(req, res) {
         ctx.textAlign = 'right'
         ctx.fillText(teammate.h + ' / ' + teammate.m, 307, 80 + (i * 104))
         ctx.beginPath()
-        ctx.rect(10, 14 + (i * 104), 354 * (teammate.h / teammate.m), 14)
+        ctx.rect(13, 14 + (i * 104), 354 * (teammate.h / teammate.m), 14)
         ctx.clip()
-        ctx.drawImage(hpBars.team[teammate.h / teammate.m > .5 ? 'green' : teammate.h / teammate.m > .25 ? 'yellow' : 'red'], -344 + 354 * (teammate.h / teammate.m), 14 + i * 104)
+        ctx.drawImage(hpBars.team[teammate.h / teammate.m > .5 ? 'green' : teammate.h / teammate.m > .25 ? 'yellow' : 'red'], -341 + 354 * (teammate.h / teammate.m), 14 + i * 104)
         ctx.closePath()
         ctx.restore()
     }
