@@ -103,7 +103,7 @@ export default async function handler(req, res) {
         ctx.beginPath()
         ctx.rect(10, 14 + (i * 104), 354 * (teammate.h / teammate.m), 14)
         ctx.clip()
-        ctx.drawImage(hpBars.team[teammate.h / teammate.m > .5 ? 'green' : teammate.h / teammate.m > .25 ? 'yellow' : 'red'], 10 - 354 * (teammate.h / teammate.m), 14 + i * 104)
+        ctx.drawImage(hpBars.team[teammate.h / teammate.m > .5 ? 'green' : teammate.h / teammate.m > .25 ? 'yellow' : 'red'], -344 + 354 * (teammate.h / teammate.m), 14 + i * 104)
         ctx.closePath()
         ctx.restore()
     }
